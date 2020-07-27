@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="base :: headerfg"></div>
+    <title>Add User</title>
+
+</head>
+<body>
+<div th:replace="base :: navlinksfg"></div>
+
+<form th:action="@{/processUser}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    Username: <input type="text" th:field="*{userName}">
+
+    <input type="submit" value="Create">
+
+</form>
+
+<div th:replace="base :: footerfg"></div>
+</body>
+</html>

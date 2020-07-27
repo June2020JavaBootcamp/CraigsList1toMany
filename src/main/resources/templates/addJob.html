@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="base :: headerfg"></div>
+    <title>Add Job</title>
+
+</head>
+<body>
+<div th:replace="base :: navlinksfg"></div>
+
+<form th:action="@{/addJob}" th:object="${job}" method="post">
+    <input type="hidden" th:field="*{id}">
+
+    Job Title: <input type="text" th:field="*{jobTitle}"><br>
+
+    Job Description: <input type="text" th:field="*{description}"><br>
+
+    Date: <input type="text" th:field="*{postedDate}"><br>
+
+    Phone: <input type="text" th:field="*{phone}"><br>
+
+    Choose your username:
+    <select name="userID">
+        <option th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.userName}">
+        </option>
+    </select>
+    *If your username is not listed, please create one <a th:href="@{/addUser}">here</a> and try again.
+    <br>
+
+    <input type="submit" value="Post Job">
+</form>
+
+</body>
+</html>

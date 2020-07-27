@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="base :: headerfg"></div>
+    <title>Job Details</title>
+</head>
+<body>
+<div th:replace="base :: navlinksfg"></div>
+<h3>Job Details</h3>
+
+Job Title: [[${job.jobTitle}]]<br><br>
+
+Job Description: [[${job.description}]]<br><br>
+
+Post Date: [[${job.postedDate}]]<br><br>
+
+Contact Number: [[${job.phone}]]<br><br>
+
+
+<span th:if="${job.id >= 17}">
+            <button><a th:href = "@{/updateJob/{id}(id=${job.id})}">Update</a></button>
+            <button><a th:href = "@{/deleteJob/{id}(id=${job.id})}">Delete</a></button>
+</span>
+
+<div th:replace="base :: footerfg"></div>
+</body>
+</html>

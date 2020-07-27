@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="base :: headerfg"></div>
+    <title>Job Listings</title>
+</head>
+<body>
+<div th:replace="base :: navlinksfg"></div>
+<table class = "table">
+    <thead class="thead-light">
+    <th scope="col-3">Username</th>
+    <th scope="col-3">Job Listings</th>
+    <th scope="col-3">Actions</th>
+    </thead>
+
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userName}"></td>
+        <td>
+            <th:block th:each="job : ${user.jobs}">
+                <li th:inline="text">
+                    [[${job.jobTitle}]]
+                </li>
+            </th:block>
+        </td>
+        <td>
+            <button><a th:href="@{detailUser/{id}(id=${user.id})}">Details</a></button>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>
