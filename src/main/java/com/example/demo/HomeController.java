@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class HomeController {
     @Autowired
@@ -13,9 +16,12 @@ public class HomeController {
     @Autowired
     JobRepository jobRepository;
 
+    long userid=0;    // new
+
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("jobs", jobRepository.findAll());
+        model.addAttribute("userid", userid);
         return "index";
     }
 
@@ -28,6 +34,7 @@ public class HomeController {
     @PostMapping("/processUser")
     public String processUser(@ModelAttribute User user){
         userRepository.save(user);
+        userid = user.getId();
         return "redirect:/addJob";
     }
 
@@ -58,8 +65,17 @@ public class HomeController {
 
     @RequestMapping("/addJob")
     public String addJob(Model model){
-    model.addAttribute("job", new Job());
-    model.addAttribute("users", userRepository.findAllByIdGreaterThanOrderByUserName(13));
+        model.addAttribute("job", new Job());
+        //model.addAttribute("users", userRepository.findAllByIdGreaterThanOrderByUserName(13));
+        //new
+        boolean found = userRepository.existsById(userid);
+        if (found) {
+            Set<User> current = new HashSet<>();
+            current.add(userRepository.findById(userid).get());
+            model.addAttribute("users", current);
+        } else
+            model.addAttribute("users", null); //upto here
+
         return "addJob";
     }
 
@@ -75,7 +91,11 @@ public class HomeController {
     public String updateJob(@PathVariable("id") long id, Model model){
         Job job = jobRepository.findById(id).get();
         model.addAttribute("job", job);
-        model.addAttribute("users",userRepository.findAllByIdGreaterThanOrderByUserName(13));
+        //model.addAttribute("users",userRepository.findAllByIdGreaterThanOrderByUserName(13));
+        //new
+        Set<User> current = new HashSet<>();
+        current.add(userRepository.findById(userid).get());
+        model.addAttribute("users", current);  //upto here
         return "addJob";
     }
 

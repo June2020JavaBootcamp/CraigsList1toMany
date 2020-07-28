@@ -22,7 +22,8 @@
         <td>
             <button><a th:href = "@{/detailJob/{id}(id=${job.id})}">Details</a></button>
 
-            <span th:if="${job.id >= 17}">
+<!--            <span th:if="${job.id >= 17}">-->
+            <span th:if="${job.user.id} == ${userid}">
             <button><a th:href = "@{/updateJob/{id}(id=${job.id})}">Update</a></button>
             <button><a th:href = "@{/deleteJob/{id}(id=${job.id})}">Delete</a></button>
             </span>
